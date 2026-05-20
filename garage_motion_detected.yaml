@@ -1,0 +1,40 @@
+alias: Garage Motion Detected
+description: ""
+triggers:
+  - trigger: switch.turned_on
+    target:
+      entity_id: switch.dmzs3sw_vdevo_switch_1
+      options: {}
+conditions: []
+actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      title: Motion
+      message: Garage
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - action: switch.turn_off
+    metadata: {}
+    target:
+      entity_id: switch.dmzs3sw_vdevo_switch_1
+    data: {}
+  - action: light.turn_on
+    metadata: {}
+    target:
+      entity_id: light.garage_cam_aqia_indicator_light
+    data: {}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 15
+      milliseconds: 0
+  - action: light.turn_off
+    metadata: {}
+    target:
+      entity_id: light.garage_cam_aqia_indicator_light
+    data: {}
+mode: single
