@@ -1,0 +1,29 @@
+alias: Close Garage Door at Night (if left open)
+description: ""
+triggers:
+  - trigger: time
+    at: "22:00:00"
+conditions:
+  - condition: state
+    entity_id: binary_sensor.garage_a_garage_door_a_open
+    state: "on"
+  - condition: template
+    value_template: |
+      {{ (now().timestamp() - as_timestamp(states('input_datetime.last_garage_door_open')))/60 > 10 }}
+actions:
+  - action: siren.turn_on
+    target:
+      entity_id: siren.garage_cam_aqia
+  - delay:
+      minutes: 0
+      seconds: 1
+  - action: cover.close_cover
+    target:
+      entity_id: cover.garage_a_garage_door_a
+  - delay:
+      minutes: 0
+      seconds: 10
+  - action: siren.turn_off
+    target:
+      entity_id: siren.garage_cam_aqia
+mode: single
