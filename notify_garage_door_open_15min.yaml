@@ -1,0 +1,29 @@
+alias: Notify When Garage Door Remains Open (15min)
+description: ""
+triggers:
+  - trigger: time
+    at:
+      entity_id: input_datetime.last_garage_door_open
+      offset: "00:15:00"
+conditions:
+  - condition: state
+    entity_id: cover.garage_a_garage_door_a
+    state: open
+actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Garage door has been open for 15 minutes.
+      title: Garage Door Open 15 Minutes
+  - action: tts.speak
+    metadata: {}
+    target:
+      device_id: ecc3ea2e738139fe1ada71f4cd8b36b1
+      data:
+        cache: true
+        media_player_entity_id: media_player.all
+        message: >-
+          Your Attention Please, The garage door has been open for fifteen
+          minutes. Repeating, the garage door is open for the last 15 minutes,
+          thank you!
+mode: single
