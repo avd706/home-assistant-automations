@@ -1,0 +1,18 @@
+alias: Notify When Garage Door Remains Open (10min)
+description: ""
+triggers:
+  - trigger: time
+    at:
+      entity_id: input_datetime.last_garage_door_open
+      offset: "00:05:00"
+conditions:
+  - condition: state
+    entity_id: cover.garage_a_garage_door_a
+    state: open
+actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Garage door has been open for 5 minutes.
+      title: Garage Door Open
+mode: single
